@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error">
+	<Properties>
+		<Property name="log-path">${sys:catalina.base}/logs/</Property>
+	</Properties>
+	<Appenders>
+		<Console name="stdout" target="SYSTEM_OUT">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+		</Console>
+		<RollingFile name="system" filePattern="${log-path}system-%d{yyyyMMdd}.log" filename="${log-path}system.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="err" filePattern="${log-path}err-%d{yyyyMMdd}.log" filename="${log-path}err.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="httpClient" filePattern="${log-path}httpClient-%d{yyyyMMdd}.log" filename="${log-path}httpClient.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="webSocketEndPoint" filePattern="${log-path}webSocketEndPoint-%d{yyyyMMdd}.log" filename="${log-path}webSocketEndPoint.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="webSocket" filePattern="${log-path}webSocket-%d{yyyyMMdd}.log" filename="${log-path}webSocket.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="messageQueue" filePattern="${log-path}messageQueue-%d{yyyyMMdd}.log" filename="${log-path}messageQueue.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="stdout" />
+			<AppenderRef ref="system" />
+		</Root>
+		<Logger name="system" level="info" additivity="false">
+			<AppenderRef ref="stdout" />
+			<AppenderRef ref="system" />
+		</Logger>
+		<Logger name="err" level="error" additivity="false">
+			<AppenderRef ref="err" />
+		</Logger>
+		<Logger name="httpClient" level="info" additivity="false">
+			<AppenderRef ref="httpClient" />
+		</Logger>
+		<logger name="webSocketEndPoint" level="info" additivity="false">
+			<AppenderRef ref="webSocketEndPoint" />
+		</logger>
+		<logger name="webSocket" level="info" additivity="false">
+			<AppenderRef ref="webSocket" />
+		</logger>
+		<logger name="messageQueue" level="info" additivity="false">
+			<AppenderRef ref="messageQueue" />
+		</logger>
+	</Loggers>
+</Configuration>
