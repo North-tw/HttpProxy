@@ -9,7 +9,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>17</jdk.version>
 		<log4j2.version>2.17.1</log4j2.version>
-		<tomcat.version>10.0.14</tomcat.version>
+		<tomcat.version>9.0.56</tomcat.version>
 	</properties>
 
 	<build>
