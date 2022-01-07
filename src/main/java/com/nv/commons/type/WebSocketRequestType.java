@@ -22,7 +22,7 @@ public enum WebSocketRequestType {
 
 	private final int unique;
 
-	WebSocketRequestType(int unique) {
+	private WebSocketRequestType(int unique) {
 		this.unique = unique;
 	}
 

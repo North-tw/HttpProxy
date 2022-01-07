@@ -22,7 +22,7 @@ public enum WebSocketMessageType {
 
 	private final int unique;
 
-	WebSocketMessageType(int unique) {
+	private WebSocketMessageType(int unique) {
 		this.unique = unique;
 	}
 
