@@ -58,11 +58,19 @@
 
 	<dependencies>
 
-		<!-- Maven Servlet build library -->
+		<!-- Maven Servlet build library For Tomcat 9.0 -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- websocket For Tomcat 9.0 -->
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>1.1</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -140,14 +148,6 @@
 			<groupId>com.neutec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>1.10</version>
-		</dependency>
-
-		<!-- websocket -->
-		<dependency>
-			<groupId>javax.websocket</groupId>
-			<artifactId>javax.websocket-api</artifactId>
-			<version>1.1</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<!-- okhttp3 -->
