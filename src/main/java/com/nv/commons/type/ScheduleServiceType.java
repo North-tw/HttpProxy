@@ -1,12 +1,12 @@
 package com.nv.commons.type;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import com.nv.manager.WebSocketSessionManager;
 import com.nv.util.LogUtils;
@@ -21,8 +21,8 @@ public enum ScheduleServiceType {
 		}
 	});
 
-	public final static List<ScheduleServiceType> VALUES = Collections
-		.unmodifiableList(Arrays.asList(ScheduleServiceType.values()));
+	public final static List<ScheduleServiceType> VALUES = Arrays.stream(ScheduleServiceType.values())
+		.collect(Collectors.toUnmodifiableList());
 
 	private Runnable task;
 
