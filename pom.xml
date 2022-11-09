@@ -8,7 +8,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>17</jdk.version>
-		<log4j2.version>2.17.1</log4j2.version>
+		<log4j2.version>2.19.0</log4j2.version>
 		<tomcat.version>9.0.56</tomcat.version>
 	</properties>
 
@@ -18,38 +18,23 @@
 			<plugins>
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.8.1</version>
+					<version>3.10.1</version>
 					<configuration>
 						<encoding>utf-8</encoding>
 						<source>${jdk.version}</source>
 						<target>${jdk.version}</target>
 					</configuration>
 				</plugin>
-				<!-- 加入抓取jar source code -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-dependency-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>download-sources</id>
-							<goals>
-								<goal>sources</goal>
-							</goals>
-							<configuration></configuration>
-						</execution>
-					</executions>
-				</plugin>
-				<!-- maven unit test plug-in -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.19.1</version>
+					<version>2.22.2</version>
 					<configuration>
-						<!-- 限制測試爲單一執行序，一個一個單元進行測試 -->
-						<forkCount>1</forkCount>
-						<reuseForks>false</reuseForks>
-						<!-- 共要設定2項 -->
-						<argLine>-Xmx2G</argLine>
+						<forkMode>always</forkMode>
+				         <argLine>
+				           --add-opens java.base/java.lang=ALL-UNNAMED
+				           --add-opens java.base/sun.net.util=ALL-UNNAMED
+				         </argLine> 
 					</configuration>
 				</plugin>
 			</plugins>
@@ -118,23 +103,23 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
+			<version>3.12.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.5</version>
+			<version>2.11.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>1.9.3</version>
+			<version>1.9.4</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.nv</groupId>
 			<artifactId>expandUtil</artifactId>
-			<version>2.4</version>
+			<version>3.2</version>
 		</dependency>
 
 		<!-- javax.xml.bind -->
@@ -154,16 +139,71 @@
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>okhttp</artifactId>
-			<version>4.9.1</version>
+			<version>4.10.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>logging-interceptor</artifactId>
-			<version>4.9.1</version>
+			<version>4.10.0</version>
 		</dependency>
 	</dependencies>
 
 	<profiles>
+	    <profile>
+			<id>test</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>3.1.0</version>
+						<configuration>
+							<warSourceExcludes>
+								META-INF/context.xml,WEB-INF/web.xml
+							</warSourceExcludes>
+							<archive>
+								<addMavenDescriptor>false</addMavenDescriptor>
+							</archive>
+							<warName>ROOT</warName>
+						</configuration>
+						<executions>
+							<execution>
+								<id>default-war</id>
+								<configuration>
+									<webResources>
+										<resource>
+											<directory>src/main/config/test</directory>
+											<targetPath>WEB-INF/classes</targetPath>
+											<includes>
+												<include>elk_encrypt.property</include>
+											</includes>
+										</resource>
+										<resource>
+											<directory>src/main/config/test</directory>
+											<targetPath>WEB-INF</targetPath>
+											<includes>
+												<include>web.xml</include>
+											</includes>
+										</resource>
+									</webResources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+					    <groupId>org.apache.maven.plugins</groupId>
+					    <artifactId>maven-surefire-plugin</artifactId>
+					    <version>2.22.2</version>
+					    <configuration>
+					        <argLine>
+					           --add-opens java.base/java.lang=ALL-UNNAMED
+					           --add-opens java.base/sun.net.util=ALL-UNNAMED
+					        </argLine> 
+					    </configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		
 		<profile>
 			<id>workspace</id>
 			<build>
