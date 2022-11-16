@@ -8,6 +8,8 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 import com.nv.commons.constant.Setting;
+import com.nv.commons.model.database.RedisManager;
+import com.nv.commons.model.database.RedisPubSubManager;
 import com.nv.manager.CountryLookup;
 import com.nv.util.DateUtils;
 import com.nv.util.LogUtils;
@@ -30,6 +32,12 @@ public class AppInitListener implements ServletContextListener {
 
 			// initialize JS File Version. Reset when restarting server.
 			Setting.JS_FILE_VERSION = Integer.parseInt(DateUtils.toString(new java.util.Date(), "yyyyMMddHH"));
+			
+			LogUtils.system.info("init RedisManager");
+//			RedisManager.init();
+			
+			LogUtils.system.info("init RedisPubSubManager");
+//			RedisPubSubManager.init();
 
 			LogUtils.system.info("AppInitListener init finish!");
 		} catch (Exception e) {
@@ -62,6 +70,22 @@ public class AppInitListener implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-
+		/* 
+		 * RedisManager.shutdown();
+		 * RedisPubSubManager.shutdown();
+		 * 以上兩個方法順序必須在Redis各項服務之後執行!!
+		 */
+		try {
+			LogUtils.system.info("Shutdown All RedisCluster connections");
+			RedisManager.shutdown();
+		} catch (Exception e) {
+			LogUtils.system.error("Shutdown All RedisCluster connections Error", e);
+		}
+		try {
+			LogUtils.system.info("Shutdown All RedisSentinel connections");
+			RedisPubSubManager.shutdown();
+		} catch (Exception e) {
+			LogUtils.system.error("Shutdown All RedisSentinel connections Error", e);
+		}
 	}
 }
