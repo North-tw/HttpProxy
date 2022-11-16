@@ -39,6 +39,11 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 	</build>
 
 	<dependencies>
@@ -146,6 +151,13 @@
 			<artifactId>logging-interceptor</artifactId>
 			<version>4.10.0</version>
 		</dependency>
+		
+		<!-- redisson -->
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson</artifactId>
+			<version>3.17.7</version>
+		</dependency>
 	</dependencies>
 
 	<profiles>
@@ -227,10 +239,54 @@
 						</executions>
 					</plugin>
 				</plugins>
+				<resources>
+					<resource>
+						<directory>src/main/config/dev</directory>
+						<includes>
+							<include>redis_encrypt.property</include>
+							<include>redisSentinel_encrypt.property</include>
+						</includes>
+					</resource>
+				</resources>
 			</build>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
+		</profile>
+		
+		<profile>
+			<id>dev</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>3.1.0</version>
+						<configuration>
+							<warSourceExcludes>
+								META-INF/context.xml
+							</warSourceExcludes>
+							<archive>
+								<addMavenDescriptor>false</addMavenDescriptor>
+							</archive>
+							<warName>HttpProxy</warName>
+						</configuration>
+						<executions>
+							<execution>
+								<id>default-war</id>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+				<resources>
+					<resource>
+						<directory>src/main/config/dev</directory>
+						<includes>
+							<include>redis_encrypt.property</include>
+							<include>redisSentinel_encrypt.property</include>
+						</includes>
+					</resource>
+				</resources>
+			</build>
 		</profile>
 	</profiles>
 
