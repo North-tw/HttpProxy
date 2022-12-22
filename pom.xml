@@ -158,6 +158,14 @@
 			<artifactId>redisson</artifactId>
 			<version>3.17.7</version>
 		</dependency>
+		
+		<!-- test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.2</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<profiles>
@@ -248,6 +256,17 @@
 						</includes>
 					</resource>
 				</resources>
+				<testResources>
+					<testResource>
+						<directory>src/main/config/test</directory>
+						<includes>
+							<include>context.xml</include>
+						</includes>
+					</testResource>
+					<testResource>
+						<directory>src/test/resources</directory>
+					</testResource>
+				</testResources>
 			</build>
 			<activation>
 				<activeByDefault>true</activeByDefault>

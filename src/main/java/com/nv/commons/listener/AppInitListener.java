@@ -10,7 +10,9 @@ import javax.servlet.annotation.WebListener;
 import com.nv.commons.constant.Setting;
 import com.nv.commons.model.database.RedisManager;
 import com.nv.commons.model.database.RedisPubSubManager;
+import com.nv.commons.type.SiteNameType;
 import com.nv.manager.CountryLookup;
+import com.nv.manager.SystemInfo;
 import com.nv.util.DateUtils;
 import com.nv.util.LogUtils;
 
@@ -27,19 +29,30 @@ public class AppInitListener implements ServletContextListener {
 			LogUtils.system.info("validate timezone");
 			checkTimeZone();
 
+			LogUtils.system.info("init context.xml");
+			String serverID = sce.getServletContext().getInitParameter("ServerID");
+			SiteNameType siteNameType = SiteNameType.get(sce.getServletContext().getInitParameter("SiteName"))
+				.orElseThrow(() -> new IllegalArgumentException("SiteNameType not found!!!"));
+			int serverType = Integer.parseInt(sce.getServletContext().getInitParameter("ServerType"));
+
+			LogUtils.system.info("init SystemInfo");
+			SystemInfo.getInstance().init(serverID, serverType, siteNameType);
+
 			LogUtils.system.info("init CountryLookup");
 			CountryLookup.getInstance().init();
 
 			// initialize JS File Version. Reset when restarting server.
-			Setting.JS_FILE_VERSION = Integer.parseInt(DateUtils.toString(new java.util.Date(), "yyyyMMddHH"));
-			
+			Setting.JS_FILE_VERSION = Integer
+				.parseInt(DateUtils.toString(new java.util.Date(), "yyyyMMddHH"));
+
 			LogUtils.system.info("init RedisManager");
-//			RedisManager.init();
-			
+			RedisManager.init();
+
 			LogUtils.system.info("init RedisPubSubManager");
-//			RedisPubSubManager.init();
+			RedisPubSubManager.init();
 
 			LogUtils.system.info("AppInitListener init finish!");
+
 		} catch (Exception e) {
 			LogUtils.system.error("AppInitListener init error!!!", e);
 			throw e;
@@ -70,9 +83,8 @@ public class AppInitListener implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-		/* 
-		 * RedisManager.shutdown();
-		 * RedisPubSubManager.shutdown();
+		/*
+		 * RedisManager.shutdown(); RedisPubSubManager.shutdown();
 		 * 以上兩個方法順序必須在Redis各項服務之後執行!!
 		 */
 		try {
