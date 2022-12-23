@@ -16,6 +16,8 @@ public class LogUtils {
 	public static final Logger webSocket = LoggerFactory.getLogger("webSocket");
 
 	public static final Logger messageQueue = LoggerFactory.getLogger("messageQueue");
+	
+	public static final Logger unitTest = LoggerFactory.getLogger("unitTest");
 
 	// 僅static function，不應該執行建構子
 	private LogUtils() {

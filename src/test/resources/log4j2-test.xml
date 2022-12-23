@@ -17,11 +17,23 @@
 				<TimeBasedTriggeringPolicy interval="1" />
 			</Policies>
 		</RollingFile>
+		<RollingFile name="unitTest"
+			filePattern="${log-path}unitTest-%d{yyyyMMdd}.log"
+			filename="${log-path}unitTest.log" append="true">
+			<PatternLayout
+				pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
 	</Appenders>
 	<Loggers>
 		<Root level="info">
 			<AppenderRef ref="stdout" />
 			<AppenderRef ref="system" />
 		</Root>
+		<logger name="unitTest" level="info" additivity="false">
+			<AppenderRef ref="unitTest" />
+		</logger>
 	</Loggers>
 </Configuration>
