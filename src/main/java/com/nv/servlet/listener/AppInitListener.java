@@ -1,5 +1,6 @@
-package com.nv.commons.listener;
+package com.nv.servlet.listener;
 
+import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -10,9 +11,14 @@ import javax.servlet.annotation.WebListener;
 import com.nv.commons.constant.Setting;
 import com.nv.commons.model.database.RedisManager;
 import com.nv.commons.model.database.RedisPubSubManager;
-import com.nv.commons.type.SiteNameType;
+import com.nv.expandUtil.util.ExceptionUtils;
 import com.nv.manager.CountryLookup;
+import com.nv.manager.FactoryManager;
+import com.nv.manager.ResultServerManager;
 import com.nv.manager.SystemInfo;
+import com.nv.manager.cache.properties.DealerProxyCache;
+import com.nv.manager.cache.properties.DealerServerCache;
+import com.nv.manager.cache.properties.ResultServerCache;
 import com.nv.util.DateUtils;
 import com.nv.util.LogUtils;
 
@@ -29,24 +35,32 @@ public class AppInitListener implements ServletContextListener {
 			LogUtils.system.info("validate timezone");
 			checkTimeZone();
 
-			LogUtils.system.info("init context.xml");
-			String serverID = sce.getServletContext().getInitParameter("ServerID");
-			SiteNameType siteNameType = SiteNameType.get(sce.getServletContext().getInitParameter("SiteName"))
-				.orElseThrow(() -> new IllegalArgumentException("SiteNameType not found!!!"));
-			int serverType = Integer.parseInt(sce.getServletContext().getInitParameter("ServerType"));
-
 			LogUtils.system.info("init SystemInfo");
-			SystemInfo.getInstance().init(serverID, serverType, siteNameType);
+			SystemInfo.getInstance().init(sce.getServletContext());
 
 			LogUtils.system.info("init CountryLookup");
 			CountryLookup.getInstance().init();
 
 			// initialize JS File Version. Reset when restarting server.
-			Setting.JS_FILE_VERSION = Integer
-				.parseInt(DateUtils.toString(new java.util.Date(), "yyyyMMddHH"));
+			Setting.JS_FILE_VERSION = Integer.parseInt(DateUtils.toString(new Date(), "yyyyMMddHH"));
+
+			LogUtils.system.info("init FactoryManager");
+			FactoryManager.init();
 
 			LogUtils.system.info("init RedisManager");
 			RedisManager.init();
+
+			LogUtils.system.info("init DealerProxyCache");
+			DealerProxyCache.getInstance().init();
+
+			LogUtils.system.info("init DealerServerCache");
+			DealerServerCache.getInstance().init();
+
+			LogUtils.system.info("init ResultServerCache");
+			ResultServerCache.getInstance().init();
+
+			LogUtils.system.info("init ResultServerManager");
+			ResultServerManager.getInstance().init();
 
 			LogUtils.system.info("init RedisPubSubManager");
 			RedisPubSubManager.init();
@@ -55,7 +69,7 @@ public class AppInitListener implements ServletContextListener {
 
 		} catch (Exception e) {
 			LogUtils.system.error("AppInitListener init error!!!", e);
-			throw e;
+			ExceptionUtils.amendToUncheckedException(e);
 		}
 	}
 

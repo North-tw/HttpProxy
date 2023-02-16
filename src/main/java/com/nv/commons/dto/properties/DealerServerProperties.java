@@ -1,37 +1,32 @@
 package com.nv.commons.dto.properties;
 
-public class DealerServerProperties {
-
-	private int tableid;
-	private String url;
-	private String login;
+public class DealerServerProperties extends DealerServerPropertiesView {
 
 	public DealerServerProperties() {
 		super();
 	}
 
-	public int getTableid() {
-		return tableid;
-	}
-
-	public void setTableid(int tableid) {
-		this.tableid = tableid;
-	}
-
-	public String getUrl() {
-		return url;
+	public void setTableId(int tableId) {
+		this.tableId = tableId;
 	}
 
 	public void setUrl(String url) {
 		this.url = url;
 	}
 
-	public String getLogin() {
-		return login;
-	}
-
 	public void setLogin(String login) {
 		this.login = login;
 	}
 
+	public void setMaxGameRound(int maxGameRound) {
+		this.maxGameRound = maxGameRound;
+	}
+
+	public void setMaxGameShoe(int maxGameShoe) {
+		this.maxGameShoe = maxGameShoe;
+	}
+
+	public void setDealerServerType(int dealerServerType) {
+		this.dealerServerType = dealerServerType;
+	}
 }

@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 
 import com.nv.expandUtil.util.ExceptionUtils;
 import com.nv.expandUtil.util.StringUtils;
+import com.nv.manager.OKHttpClientManager.HttpPostRequest;
 import com.nv.util.LogUtils;
 
 import okhttp3.Authenticator;
@@ -215,6 +216,14 @@ public class OKHttpClientManager {
 		return new HttpPostRequest(url);
 	}
 
+	public HttpPostRequest getHttpPostRequest(String url, boolean closeConnection) {
+		HttpPostRequest req = new HttpPostRequest(url);
+		if (closeConnection) {
+			req.addHeader("Connection", "close");
+		}
+		return req;
+	}
+	
 	public HttpJsonPostRequest getHttpJsonPostRequest(String url) {
 		return new HttpJsonPostRequest(url);
 	}

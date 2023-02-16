@@ -3,6 +3,11 @@ package com.nv.commons.constant;
 import com.nv.manager.SystemInfo;
 
 public class SystemConstant {
+	
+	public static final int SUCCESS_CODE = 200;
+	
+	public static final String SUCCESS = "SUCCESS";
+	public static final String FAIL = "FAIL";
 
 	public static final String NO_COUNTRY_RESULT = "XX";
 
@@ -25,5 +30,10 @@ public class SystemConstant {
 
 	// Redis Tag
 	public static final String REDIS_TAG = ":";
+	
+	// DealerProxy event加解密鑰
+	public static final String DEALER_EVENT_AES_TOKEN = "qwervbppnrvr56m123+#";
+	
+	public static final String URL_EVENT = "/event";
 
 }

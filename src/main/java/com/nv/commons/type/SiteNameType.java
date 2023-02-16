@@ -1,41 +1,56 @@
 package com.nv.commons.type;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 public enum SiteNameType {
 
-	Staging(0), DEV(1), LCS(2), Venus(3), LCSA(4), Validate(5), Promo(6);
+	Staging(0,"Staging"), 
+	DEV(1,"DEV"), 
+	LCS(2,"LCS"), 
+	Venus(3,"Venus"), 
+	LCSA(4,"LCSA"), 
+	Validate(5,"Validate"), 
+	Promo(6,"Promo");
 
-	private final int unique;
+	private int unique;
+	private String name;
 
-	SiteNameType(int unique) {
+	SiteNameType(int unique, String name) {
 		this.unique = unique;
+		this.name = name;
 	}
 
 	public int unique() {
 		return unique;
 	}
-	
-	public final static List<SiteNameType> VALUES = Collections
-		.unmodifiableList(Arrays.asList(SiteNameType.values()));
 
-	private static int[] uniques = null;
+	public String getName() {
+		return name;
+	}
+
+	public final static SiteNameType[] VALUES;
 
 	static {
-		uniques = new int[VALUES.size()];
-		for (int i = 0; i < VALUES.size(); i++) {
-			uniques[i] = VALUES.get(i).unique;
+		int maxCode = Arrays.stream(SiteNameType.values()).mapToInt(e -> e.unique).max().getAsInt();
+
+		VALUES = new SiteNameType[maxCode + 1];
+		for (SiteNameType e : SiteNameType.values()) {
+			VALUES[e.unique] = e;
 		}
 	}
-	
-	public static Optional<SiteNameType> get(int unqiue) {
-		return VALUES.stream().filter(x -> x.unique() == unqiue).findFirst();
+
+	public static Optional<SiteNameType> getInstanceOf(int unqiue) {
+		if (ArrayUtils.isArrayIndexValid(VALUES, unqiue)) {
+			return Optional.empty();
+		} else {
+			return Optional.ofNullable(VALUES[unqiue]);
+		}
 	}
 
-	public static Optional<SiteNameType> get(String name) {
-		return VALUES.stream().filter(x -> x.name().equalsIgnoreCase(name)).findFirst();
+	public static Optional<SiteNameType> getInstanceOf(String name) {
+		return Arrays.stream(VALUES).filter(x -> x.getName().equalsIgnoreCase(name)).findFirst();
 	}
 }

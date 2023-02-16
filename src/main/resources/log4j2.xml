@@ -13,6 +13,12 @@
 				<TimeBasedTriggeringPolicy interval="1" />
 			</Policies>
 		</RollingFile>
+		<RollingFile name="gameInfoLogger" filePattern="${log-path}gameInfoLogger-%d{yyyyMMdd}.log" filename="${log-path}gameInfoLogger.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
 		<RollingFile name="err" filePattern="${log-path}err-%d{yyyyMMdd}.log" filename="${log-path}err.log" append="true">
 			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
 			<Policies>
@@ -43,6 +49,96 @@
 				<TimeBasedTriggeringPolicy interval="1" />
 			</Policies>
 		</RollingFile>
+		<RollingFile name="responseError" filePattern="${log-path}responseError-%d{yyyyMMdd}.log" filename="${log-path}responseError.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="parseError" filePattern="${log-path}parseError-%d{yyyyMMdd}.log" filename="${log-path}parseError.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="gameShoeNoValidation" filePattern="${log-path}gameShoeNoValidation-%d{yyyyMMdd}.log" filename="${log-path}gameShoeNoValidation.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="winnerValidation" filePattern="${log-path}winnerValidation-%d{yyyyMMdd}.log" filename="${log-path}winnerValidation.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="skipRoundValidation" filePattern="${log-path}skipRoundValidation-%d{yyyyMMdd}.log" filename="${log-path}skipRoundValidation.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="randomPayValidation" filePattern="${log-path}randomPayValidation-%d{yyyyMMdd}.log" filename="${log-path}randomPayValidation.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="oneCardDrawnValidation" filePattern="${log-path}oneCardDrawnValidation-%d{yyyyMMdd}.log" filename="${log-path}oneCardDrawnValidation.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="betTimeValidation" filePattern="${log-path}betTimeValidation-%d{yyyyMMdd}.log" filename="${log-path}betTimeValidation.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="betInsuranceValidation" filePattern="${log-path}betInsuranceValidation-%d{yyyyMMdd}.log" filename="${log-path}betInsuranceValidation.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="changeStateValidation" filePattern="${log-path}changeStateValidation-%d{yyyyMMdd}.log" filename="${log-path}changeStateValidation.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="voidRoundValidation" filePattern="${log-path}voidRoundValidation-%d{yyyyMMdd}.log" filename="${log-path}voidRoundValidation.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="reshakeSicboValidation" filePattern="${log-path}reshakeSicboValidation-%d{yyyyMMdd}.log" filename="${log-path}reshakeSicboValidation.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="betOneDayValidation" filePattern="${log-path}betOneDayValidation-%d{yyyyMMdd}.log" filename="${log-path}betOneDayValidation.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="dealCardValidation" filePattern="${log-path}dealCardValidation-%d{yyyyMMdd}.log" filename="${log-path}dealCardValidation.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="gameErrorLogger" filePattern="${log-path}gameErrorLogger-%d{yyyyMMdd}.log" filename="${log-path}gameErrorLogger.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
 	</Appenders>
 	<Loggers>
 		<Root level="info">
@@ -52,6 +148,9 @@
 		<Logger name="system" level="info" additivity="false">
 			<AppenderRef ref="stdout" />
 			<AppenderRef ref="system" />
+		</Logger>
+		<Logger name="gameInfoLogger" level="error" additivity="false">
+			<AppenderRef ref="gameInfoLogger" />
 		</Logger>
 		<Logger name="err" level="error" additivity="false">
 			<AppenderRef ref="err" />
@@ -67,6 +166,51 @@
 		</logger>
 		<logger name="messageQueue" level="info" additivity="false">
 			<AppenderRef ref="messageQueue" />
+		</logger>
+		<logger name="responseError" level="info" additivity="false">
+			<AppenderRef ref="responseError" />
+		</logger>
+		<logger name="parseError" level="info" additivity="false">
+			<AppenderRef ref="parseError" />
+		</logger>
+		<logger name="gameShoeNoValidation" level="info" additivity="false">
+			<AppenderRef ref="gameShoeNoValidation" />
+		</logger>
+		<logger name="winnerValidation" level="info" additivity="false">
+			<AppenderRef ref="winnerValidation" />
+		</logger>
+		<logger name="skipRoundValidation" level="info" additivity="false">
+			<AppenderRef ref="skipRoundValidation" />
+		</logger>
+		<logger name="randomPayValidation" level="info" additivity="false">
+			<AppenderRef ref="randomPayValidation" />
+		</logger>
+		<logger name="oneCardDrawnValidation" level="info" additivity="false">
+			<AppenderRef ref="oneCardDrawnValidation" />
+		</logger>
+		<logger name="betTimeValidation" level="info" additivity="false">
+			<AppenderRef ref="betTimeValidation" />
+		</logger>
+		<logger name="betInsuranceValidation" level="info" additivity="false">
+			<AppenderRef ref="betInsuranceValidation" />
+		</logger>
+		<logger name="changeStateValidation" level="info" additivity="false">
+			<AppenderRef ref="changeStateValidation" />
+		</logger>
+		<logger name="voidRoundValidation" level="info" additivity="false">
+			<AppenderRef ref="voidRoundValidation" />
+		</logger>
+		<logger name="reshakeSicboValidation" level="info" additivity="false">
+			<AppenderRef ref="reshakeSicboValidation" />
+		</logger>
+		<logger name="betOneDayValidation" level="info" additivity="false">
+			<AppenderRef ref="betOneDayValidation" />
+		</logger>
+		<logger name="dealCardValidation" level="info" additivity="false">
+			<AppenderRef ref="dealCardValidation" />
+		</logger>
+		<logger name="gameErrorLogger" level="info" additivity="false">
+			<AppenderRef ref="gameErrorLogger" />
 		</logger>
 	</Loggers>
 </Configuration>

@@ -9,13 +9,6 @@ import com.nv.util.JSONUtils;
 public class DealerProxyPropertiesBO {
 
 	public static Optional<DealerProxyProperties> get() {
-		Optional<String> queryOptional = DealerProxyPropertiesDAO.get();
-		if (queryOptional.isPresent()) {
-			DealerProxyProperties data = JSONUtils.jsonToInstance(queryOptional.get(),
-				DealerProxyProperties.class);
-			return Optional.ofNullable(data);
-		} else {
-			return Optional.empty();
-		}
+		return DealerProxyPropertiesDAO.get();
 	}
 }
