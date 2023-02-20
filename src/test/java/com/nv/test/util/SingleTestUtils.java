@@ -2,18 +2,18 @@ package com.nv.test.util;
 
 public class SingleTestUtils {
 
-	private final static SingleTestUtil util = new SingleTestUtil();
+	private final static DataUtil util = new DataUtil();
 
-	public static SingleTestUtil getUtil() {
+	public static DataUtil getDataUtil() {
 		return util;
 	}
 
-	public static class SingleTestUtil {
+	public static class DataUtil {
 
 		private Object in;
 		private Object out;
 
-		public SingleTestUtil() {
+		public DataUtil() {
 		}
 
 		public Object getIn() {
@@ -31,7 +31,7 @@ public class SingleTestUtils {
 		public void setOut(Object out) {
 			this.out = out;
 		}
-		
+
 		public void clear() {
 			this.in = null;
 			this.out = null;

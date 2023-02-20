@@ -43,7 +43,7 @@ public class TestEventListener implements IEventListener {
 			result.setUuId("1000");
 
 			String data = result.getJSONObject(message.getTableID(), deliverTime);
-			SingleTestUtils.getUtil().setIn(data);
+			SingleTestUtils.getDataUtil().setIn(data);
 
 			GameEvent gameEvent = new GameEvent(message.getTableID(), message.getGameShoe(),
 				message.getGameRound(), getGameEvent(), deliverTime, data);

@@ -67,7 +67,7 @@ public class ResultServerMocker {
 				String message = EncryptUtils.desedeDecoder(x, SystemConstant.DEALER_EVENT_AES_TOKEN);
 				LogUtils.system.info("message after desedeDecoder = {}", message);
 
-				SingleTestUtils.getUtil().setOut(message);
+				SingleTestUtils.getDataUtil().setOut(message);
 
 				LogUtils.system.info("event before desedeDecoder = {}", x1);
 				String event = EncryptUtils.desedeDecoder(x1, SystemConstant.DEALER_EVENT_AES_TOKEN);

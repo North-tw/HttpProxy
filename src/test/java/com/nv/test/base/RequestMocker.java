@@ -1,5 +1,6 @@
 package com.nv.test.base;
 
+import org.apache.commons.beanutils.ConstructorUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.mockito.Mockito;
@@ -42,8 +43,7 @@ import static org.mockito.Mockito.when;
 public class RequestMocker {
 
 	public enum HttpMethodType {
-		GET,
-		POST
+		GET, POST
 	}
 
 	protected HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
@@ -176,12 +176,13 @@ public class RequestMocker {
 
 		when(request.getCookies()).thenAnswer(aInvocation -> this.cookies.toArray(new Cookie[0]));
 
-		when(request.getRequestDispatcher(anyString())).thenAnswer((Answer<RequestDispatcher>) aInvocation -> {
-			String path = (String) aInvocation.getArguments()[0];
-			this.requestDispatcher = Mockito.mock(RequestDispatcher.class);
-			when(this.requestDispatcher.toString()).thenReturn("Forword to " + path);
-			return this.requestDispatcher;
-		});
+		when(request.getRequestDispatcher(anyString()))
+			.thenAnswer((Answer<RequestDispatcher>) aInvocation -> {
+				String path = (String) aInvocation.getArguments()[0];
+				this.requestDispatcher = Mockito.mock(RequestDispatcher.class);
+				when(this.requestDispatcher.toString()).thenReturn("Forword to " + path);
+				return this.requestDispatcher;
+			});
 
 	}
 
@@ -220,8 +221,8 @@ public class RequestMocker {
 			};
 		});
 
-		when(request.getReader())
-			.thenAnswer((Answer<BufferedReader>) invocation -> new BufferedReader(new StringReader(postJsonData)));
+		when(request.getReader()).thenAnswer(
+			(Answer<BufferedReader>) invocation -> new BufferedReader(new StringReader(postJsonData)));
 	}
 
 	public void setInputStream(String content) throws IOException {
@@ -283,7 +284,7 @@ public class RequestMocker {
 		when(request.getContentType()).thenReturn(value);
 	}
 
-	public RequestMocker withFilter(Class<? extends Filter>... filters) throws Exception {
+	public RequestMocker withFilter(Class<? extends Filter>[] filters) throws Exception {
 		for (Class<? extends Filter> filterClass : filters) {
 			this.filterList.add(filterClass);
 		}
@@ -302,12 +303,13 @@ public class RequestMocker {
 		if (iterator.hasNext()) {
 			Mockito.doAnswer((Answer<Object>) aInvocation -> {
 				if (iterator.hasNext()) {
-					iterator.next().newInstance().doFilter(request, response, filterChain);
+					ConstructorUtils.invokeConstructor(iterator.next(), null).doFilter(request, response,
+						filterChain);
 				}
 				return null;
 			}).when(filterChain).doFilter(anyObject(), anyObject());
 
-			iterator.next().newInstance().doFilter(request, response, filterChain);
+			ConstructorUtils.invokeConstructor(iterator.next(), null).doFilter(request, response, filterChain);
 		}
 		return this.requestDispatcher;
 	}

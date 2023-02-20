@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import com.nv.commons.dao.redis.properties.DealerServerPropertiesDAO;
 import com.nv.commons.dto.properties.DealerServerProperties;
-import com.nv.util.JSONUtils;
 
 public class DealerServerPropertiesBO {
 

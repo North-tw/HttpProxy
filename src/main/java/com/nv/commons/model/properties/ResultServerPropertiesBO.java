@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import com.nv.commons.dao.redis.properties.ResultServerPropertiesDAO;
 import com.nv.commons.dto.properties.ResultServerProperties;
-import com.nv.util.JSONUtils;
 
 public class ResultServerPropertiesBO {
 

@@ -27,7 +27,6 @@ import org.slf4j.Logger;
 
 import com.nv.expandUtil.util.ExceptionUtils;
 import com.nv.expandUtil.util.StringUtils;
-import com.nv.manager.OKHttpClientManager.HttpPostRequest;
 import com.nv.util.LogUtils;
 
 import okhttp3.Authenticator;

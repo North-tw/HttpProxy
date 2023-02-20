@@ -49,16 +49,16 @@ public class TestProxy {
 			EncryptUtils.desedeEncoder(messageJSON, SystemConstant.DEALER_EVENT_AES_TOKEN));
 
 		LogUtils.system.info("{} response = {}", ProxyServlet.class.getSimpleName(), requestMocker.execute());
-		LogUtils.system.info("ProxyServlet before encoder = {}", SingleTestUtils.getUtil().getIn());
-		LogUtils.system.info("ResultServerMocker after decoder = {}", SingleTestUtils.getUtil().getOut());
+		LogUtils.system.info("ProxyServlet before encoder = {}", SingleTestUtils.getDataUtil().getIn());
+		LogUtils.system.info("ResultServerMocker after decoder = {}", SingleTestUtils.getDataUtil().getOut());
 
-		assertEquals(SingleTestUtils.getUtil().getIn(), SingleTestUtils.getUtil().getOut());
+		assertEquals(SingleTestUtils.getDataUtil().getIn(), SingleTestUtils.getDataUtil().getOut());
 
 	}
-	
+
 	@After
 	public void after() {
-		SingleTestUtils.getUtil().clear();
+		SingleTestUtils.getDataUtil().clear();
 	}
 
 	@AfterClass

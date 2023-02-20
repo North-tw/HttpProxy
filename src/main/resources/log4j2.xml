@@ -139,6 +139,12 @@
 				<TimeBasedTriggeringPolicy interval="1" />
 			</Policies>
 		</RollingFile>
+		<RollingFile name="redisSubscribe" filePattern="${log-path}redisSubscribe-%d{yyyyMMdd}.log" filename="${log-path}redisSubscribe.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
 	</Appenders>
 	<Loggers>
 		<Root level="info">
@@ -211,6 +217,9 @@
 		</logger>
 		<logger name="gameErrorLogger" level="info" additivity="false">
 			<AppenderRef ref="gameErrorLogger" />
+		</logger>
+		<logger name="redisSubscribe" level="info" additivity="false">
+			<AppenderRef ref="redisSubscribe" />
 		</logger>
 	</Loggers>
 </Configuration>
