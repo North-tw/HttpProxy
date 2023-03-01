@@ -166,6 +166,20 @@
 			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.tomakehurst</groupId>
+			<artifactId>wiremock-jre8</artifactId>
+			<version>2.25.1</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<profiles>
@@ -249,22 +263,15 @@
 				</plugins>
 				<resources>
 					<resource>
-						<directory>src/main/config/dev</directory>
-						<includes>
-							<include>redis_encrypt.property</include>
-							<include>redisSentinel_encrypt.property</include>
-						</includes>
+						<directory>src/main/config/workspace</directory>
 					</resource>
 				</resources>
 				<testResources>
 					<testResource>
-						<directory>src/main/config/test</directory>
-						<includes>
-							<include>context.xml</include>
-						</includes>
+						<directory>src/test/resources/workspace</directory>
 					</testResource>
 					<testResource>
-						<directory>src/test/resources</directory>
+						<directory>src/test/resources/default</directory>
 					</testResource>
 				</testResources>
 			</build>

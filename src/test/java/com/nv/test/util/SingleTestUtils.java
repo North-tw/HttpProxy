@@ -1,0 +1,40 @@
+package com.nv.test.util;
+
+public class SingleTestUtils {
+
+	private final static DataUtil util = new DataUtil();
+
+	public static DataUtil getDataUtil() {
+		return util;
+	}
+
+	public static class DataUtil {
+
+		private Object in;
+		private Object out;
+
+		public DataUtil() {
+		}
+
+		public Object getIn() {
+			return in;
+		}
+
+		public void setIn(Object in) {
+			this.in = in;
+		}
+
+		public Object getOut() {
+			return out;
+		}
+
+		public void setOut(Object out) {
+			this.out = out;
+		}
+
+		public void clear() {
+			this.in = null;
+			this.out = null;
+		}
+	}
+}

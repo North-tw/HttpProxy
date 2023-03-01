@@ -5,6 +5,8 @@ import static org.junit.Assert.fail;
 
 import java.util.Optional;
 
+import javax.servlet.ServletContext;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -19,8 +21,8 @@ import com.nv.commons.model.database.RedisManager;
 import com.nv.commons.model.properties.DealerProxyPropertiesBO;
 import com.nv.commons.model.properties.DealerServerPropertiesBO;
 import com.nv.commons.model.properties.ResultServerPropertiesBO;
-import com.nv.commons.type.SiteNameType;
 import com.nv.manager.SystemInfo;
+import com.nv.test.base.ServletContextMocker;
 import com.nv.test.util.ContextUtils;
 import com.nv.util.JSONUtils;
 
@@ -28,12 +30,13 @@ public class TestPropertiesBO {
 
 	@BeforeClass
 	public static void init() {
-		String serverID = ContextUtils.getInitParameter("ServerID");
-		SiteNameType siteNameType = SiteNameType.get(ContextUtils.getInitParameter("SiteName"))
-			.orElseThrow(() -> new IllegalArgumentException("SiteNameType not found!!!"));
-		int serverType = Integer.parseInt(ContextUtils.getInitParameter("ServerType"));
 
-		SystemInfo.getInstance().init(serverID, serverType, siteNameType);
+		ServletContext context = ServletContextMocker.getMocker()
+			.addInitParam("ServerID", ContextUtils.getInitParameter("ServerID"))
+			.addInitParam("SiteName", ContextUtils.getInitParameter("SiteName"))
+			.addInitParam("ServerType", ContextUtils.getInitParameter("ServerType")).mock();
+
+		SystemInfo.getInstance().init(context);
 		RedisManager.init();
 	}
 
@@ -78,17 +81,17 @@ public class TestPropertiesBO {
 	public void testDealerServer() {
 
 		DealerServerProperties testData = new DealerServerProperties();
-		testData.setTableid(998);
+		testData.setTableId(998);
 		testData.setLogin("default");
 		testData.setUrl("http://127.0.0.1:8080");
 
 		try {
 			String testDataString = JSONUtils.toJsonStr(testData);
 			RedisManager.get().getMap(DealerServerPropertiesDAO.BASE_CACHE_NAME)
-				.put(Integer.valueOf(testData.getTableid()).toString(), testDataString);
+				.put(Integer.valueOf(testData.getTableId()).toString(), testDataString);
 
 			Optional<DealerServerProperties> queryResult = DealerServerPropertiesBO
-				.get(testData.getTableid());
+				.get(testData.getTableId());
 			if (queryResult.isEmpty()) {
 				fail("testDealerServer is empty");
 			}
@@ -96,7 +99,7 @@ public class TestPropertiesBO {
 			assertEquals(testDataString, JSONUtils.toJsonStr(queryResult.get()));
 		} finally {
 			RedisManager.get().getMap(DealerServerPropertiesDAO.BASE_CACHE_NAME)
-				.remove(Integer.valueOf(testData.getTableid()).toString());
+				.remove(Integer.valueOf(testData.getTableId()).toString());
 		}
 	}
 
@@ -109,7 +112,7 @@ public class TestPropertiesBO {
 		testData.setResultServer(new String[]{"http://127.0.0.1:8080", "http://127.0.0.1:8081"});
 		testData.setDomainCode("default");
 		testData.setProxyHost("http://127.0.0.1");
-		testData.setProxyPort("8082");
+		testData.setProxyPort(8082);
 		testData.setProxyUser("defaultUser");
 		testData.setProxyPassword("defaultPassword");
 

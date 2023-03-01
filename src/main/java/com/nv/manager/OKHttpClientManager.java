@@ -215,6 +215,14 @@ public class OKHttpClientManager {
 		return new HttpPostRequest(url);
 	}
 
+	public HttpPostRequest getHttpPostRequest(String url, boolean closeConnection) {
+		HttpPostRequest req = new HttpPostRequest(url);
+		if (closeConnection) {
+			req.addHeader("Connection", "close");
+		}
+		return req;
+	}
+	
 	public HttpJsonPostRequest getHttpJsonPostRequest(String url) {
 		return new HttpJsonPostRequest(url);
 	}
