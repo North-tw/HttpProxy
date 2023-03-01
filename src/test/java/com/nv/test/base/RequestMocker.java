@@ -1,23 +1,10 @@
 package com.nv.test.base;
 
-import org.apache.commons.beanutils.ConstructorUtils;
-import org.apache.commons.io.IOUtils;
-import org.junit.Assert;
-import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ReadListener;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.WriteListener;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -35,10 +22,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ReadListener;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletInputStream;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.beanutils.ConstructorUtils;
+import org.apache.commons.io.IOUtils;
+import org.junit.Assert;
+import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 
 public class RequestMocker {
 
@@ -284,7 +285,7 @@ public class RequestMocker {
 		when(request.getContentType()).thenReturn(value);
 	}
 
-	public RequestMocker withFilter(Class<? extends Filter>[] filters) throws Exception {
+	public RequestMocker withFilter(Class<? extends Filter>[] filters) {
 		for (Class<? extends Filter> filterClass : filters) {
 			this.filterList.add(filterClass);
 		}
@@ -296,31 +297,50 @@ public class RequestMocker {
 	 * @throws Exception
 	 */
 	// 為了讓情境單純，這邊也可以採另外測試filter的部分，不跟servlet混淆
-	public RequestDispatcher testFilter() throws Exception {
+	public TestFilterResult testFilter() throws Exception {
 		FilterChain filterChain = Mockito.mock(FilterChain.class);
 
 		Iterator<Class<? extends Filter>> iterator = filterList.iterator();
 		if (iterator.hasNext()) {
+			boolean[] isSuccess = new boolean[]{false};
 			Mockito.doAnswer((Answer<Object>) aInvocation -> {
 				if (iterator.hasNext()) {
 					ConstructorUtils.invokeConstructor(iterator.next(), null).doFilter(request, response,
 						filterChain);
+				} else {
+					isSuccess[0] = true;
 				}
 				return null;
 			}).when(filterChain).doFilter(anyObject(), anyObject());
 
-			ConstructorUtils.invokeConstructor(iterator.next(), null).doFilter(request, response, filterChain);
+			filterChain.doFilter(request, response);
+			
+			if (isSuccess[0]) {
+				return new TestFilterResult(TestFilterResultType.SUCCESS, null);
+			} else if (this.requestDispatcher != null) {
+				return new TestFilterResult(TestFilterResultType.DISPATCHER, this.requestDispatcher);
+			} else {
+				return new TestFilterResult(TestFilterResultType.FAIL, null);
+			}
+
+		} else {
+			return new TestFilterResult(TestFilterResultType.SUCCESS, null);
 		}
-		return this.requestDispatcher;
 	}
 
 	public String execute() {
 		try {
 			if (this.filterList.size() > 0) {
-				RequestDispatcher requestDispatcher = testFilter();
+				TestFilterResult testResult = testFilter();
 				// 表示發生轉址，沒有正常執行完filter
-				if (requestDispatcher != null) {
-					return requestDispatcher.toString();
+				switch (testResult.getType()) {
+					case FAIL :
+						return null;
+					case DISPATCHER : {
+						return testResult.getData().toString();
+					}
+					default :
+						break;
 				}
 			}
 
@@ -348,6 +368,31 @@ public class RequestMocker {
 
 	public HttpServletRequest getRequest() {
 		return request;
+	}
+
+	public enum TestFilterResultType {
+		DISPATCHER, SUCCESS, FAIL
+	}
+
+	public static class TestFilterResult {
+
+		private TestFilterResultType type;
+		private Object data;
+
+		public TestFilterResult(TestFilterResultType type, Object data) {
+			super();
+			this.type = type;
+			this.data = data;
+		}
+
+		public TestFilterResultType getType() {
+			return type;
+		}
+
+		public Object getData() {
+			return data;
+		}
+
 	}
 
 	public static class ServletOutputStreamMocker extends ServletOutputStream {

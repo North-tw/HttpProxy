@@ -53,7 +53,10 @@ public class LogUtils {
 	public static final Logger dealCardValidation = LoggerFactory.getLogger("dealCardValidation");
 
 	public static final Logger redisSubscribe = LoggerFactory.getLogger("redisSubscribe");
+
+	public static final Logger setting = LoggerFactory.getLogger("setting");
 	
+	public static final Logger proxy = LoggerFactory.getLogger("proxy");
 	// 僅static function，不應該執行建構子
 	private LogUtils() {
 		throw new AssertionError();

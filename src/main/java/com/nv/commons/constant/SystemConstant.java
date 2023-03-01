@@ -35,5 +35,6 @@ public class SystemConstant {
 	public static final String DEALER_EVENT_AES_TOKEN = "qwervbppnrvr56m123+#";
 	
 	public static final String URL_EVENT = "/event";
+	public static final String URL_SETTING = "/setting";
 
 }

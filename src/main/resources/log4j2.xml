@@ -145,6 +145,18 @@
 				<TimeBasedTriggeringPolicy interval="1" />
 			</Policies>
 		</RollingFile>
+		<RollingFile name="setting" filePattern="${log-path}setting-%d{yyyyMMdd}.log" filename="${log-path}setting.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="proxy" filePattern="${log-path}proxy-%d{yyyyMMdd}.log" filename="${log-path}proxy.log" append="true">
+			<PatternLayout pattern="[%d{yyyy/MM/dd HH:mm:ss.SSS}][%F:%L][%p][%t] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+			</Policies>
+		</RollingFile>
 	</Appenders>
 	<Loggers>
 		<Root level="info">
@@ -220,6 +232,12 @@
 		</logger>
 		<logger name="redisSubscribe" level="info" additivity="false">
 			<AppenderRef ref="redisSubscribe" />
+		</logger>
+		<logger name="setting" level="info" additivity="false">
+			<AppenderRef ref="setting" />
+		</logger>
+		<logger name="proxy" level="info" additivity="false">
+			<AppenderRef ref="proxy" />
 		</logger>
 	</Loggers>
 </Configuration>

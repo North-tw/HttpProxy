@@ -34,8 +34,8 @@ public class EventFilter extends HttpFilter implements Filter {
 		throws IOException, ServletException {
 		// 重開ProxyServer前先停止接受事件，由另外一臺ProxyServer回覆DealerProxy，確保事件不遺漏。
 		if (SystemInfo.isProxyServer()) {
-			if (!Setting.STOP_RECEIVE_DEALER_EVENT) {
-				LogUtils.system.info("[DealerCurrentStateServlet] stop dealer event listening...");
+			if (Setting.STOP_RECEIVE_DEALER_EVENT) {
+				LogUtils.system.info("[EventFilter] stop dealer event listening...");
 				return;
 			} else {
 				request.setCharacterEncoding("UTF-8");

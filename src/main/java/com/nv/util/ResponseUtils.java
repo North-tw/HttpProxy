@@ -71,6 +71,14 @@ public class ResponseUtils {
 		ResponseUtils.sendJsonResponse(response,
 			JSONUtils.getJSONStr("status", "500", "message", errorMessage));
 	}
+	
+	/*
+	 * return status 500
+	 */
+	public static void respondErrorUUID(HttpServletResponse response, String uuid) {
+		ResponseUtils.sendJsonResponse(response,
+			JSONUtils.getJSONStr("status", "500", "errorUUID", uuid));
+	}
 
 	public static void sendStatus(HttpServletResponse response, String statusCode) {
 		sendStatus(response, statusCode, "");

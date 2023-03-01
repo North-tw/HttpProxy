@@ -21,9 +21,9 @@ import com.nv.util.RequestParser;
 import com.nv.util.ResponseUtils;
 
 /*
-	/event/DealerCurrentStateServlet
+	/event/ProxyServlet
 */
-@WebServlet(SystemConstant.URL_EVENT + "/ProxyServlet")
+@WebServlet(SystemConstant.URL_EVENT + "/ProxyServlet/*")
 public class ProxyServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

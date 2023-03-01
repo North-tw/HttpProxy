@@ -35,6 +35,7 @@ public enum TestSubscriberType {
 		@Override
 		protected void subscribeProcess() {
 			RedisPubSubManager.get().getTopic(channel).addListener(String.class, (channel, message) -> {
+				LogUtils.system.info("do refresh cache");
 				SingleTestUtils.getDataUtil().setOut(message);
 				LogUtils.redisSubscribe.info("{} subscribing channel: {}, message: {}", name(), channel,
 					message);
